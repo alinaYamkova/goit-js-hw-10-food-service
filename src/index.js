@@ -7,43 +7,31 @@ const newLiItem = menuBar(menuData);
 const checkBox = document.querySelector('#theme-switch-toggle');
 ulList.insertAdjacentHTML('afterbegin', newLiItem);
 
+const body = document.body;
 const Theme = {
   LIGHT: 'light-theme',
   DARK: 'dark-theme',
 };
 
-const replaceTheme = (oldTheme, newTheme) => {
-  document.body.classList.remove();
-  document.body.classList.add();
-  return;  
-}
-
-const body = document.body;
-
 checkBox.addEventListener('change', onThemeChange);
+
+const replaceTheme = (oldTheme, newTheme) => {
+  document.body.classList.remove(oldTheme), 
+  document.body.classList.add(newTheme);
+};
 
 function onThemeChange(evt) {
   evt.preventDefault();
-
-  // if (event.target.checked) {
-  //   replaceTheme(Theme.LIGHT, Theme.DARK);
-  //   localStorage.setItem('theme', Theme.DARK);
-  // } else {
-  //   replaceTheme(Theme.DARK, Theme.LIGHT);
-  //   localStorage.setItem('theme', Theme.LIGHT);
-  // }
-
+  
   if (event.target.checked) {
-    body.classList.add(Theme.DARK); 
-    body.classList.remove(Theme.LIGHT);
+    replaceTheme(Theme.LIGHT, Theme.DARK);
     localStorage.setItem('theme', Theme.DARK);
   } else {
-    body.classList.add(Theme.LIGHT);
-    body.classList.remove(Theme.DARK);
+    replaceTheme(Theme.DARK, Theme.LIGHT);
     localStorage.setItem('theme', Theme.LIGHT);
   }
 };
-
+    
 function savedThemeColor() {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === Theme.DARK) {
